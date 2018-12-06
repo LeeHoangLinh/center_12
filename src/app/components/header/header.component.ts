@@ -39,6 +39,9 @@ export class HeaderComponent implements OnInit {
   public phone: string;
   public notes: any;
   public LANGUAGE: any = LANG_VI;
+  apiCategories: string;
+  item: any;
+  itemData: any = [];
 
   @Output('isChangeLanguage') language = new EventEmitter<boolean>();
 
@@ -52,6 +55,18 @@ export class HeaderComponent implements OnInit {
   ) { }
   
   ngOnInit() {
+
+    //
+    this.apiCategories = this._getDataService.getCategoriesURL();
+    this._http.get(this.apiCategories).subscribe(data => {
+      this.item = data;
+      for (let i=0; i< this.item.length; i++) {
+        if (this.item[i].Parent && (this.item[i].Parent.Name === this.LANGUAGE.STUDENT || this.item[i].Parent.Japanese_Name === this.LANGUAGE.STUDENT)) {
+          this.itemData.push(this.item[i]);
+        }
+      }
+    });
+  
     // Header URL
     this.headerURL = this._getDataService.getHeaderURL();
 

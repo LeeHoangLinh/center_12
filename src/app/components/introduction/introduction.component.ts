@@ -65,6 +65,7 @@ export class IntroductionComponent implements OnInit {
   lang: string ;
   menuLeftData:any=[];
   introductionsDataActive:any;
+  introductionContent:SafeHtml;
   personnelData:any;
   personDetail:any;
   results=[];
@@ -99,7 +100,7 @@ export class IntroductionComponent implements OnInit {
           console.log('categories',this.categoriesData[i]);
         }
       }
-
+      this.introductionContent = this.santized.bypassSecurityTrustHtml(this.introductionsDataActive.contents.Content)
     });
   }  
 
