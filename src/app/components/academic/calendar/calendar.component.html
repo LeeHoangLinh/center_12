@@ -1,0 +1,68 @@
+<div class="custom-container">
+    <ngx-carousel [inputs]="carouselBanner" [moveToSlide]="1" (onMove)="onmoveFn($event)">
+        <ngx-item NgxCarouselItem class="bannerStyle" *ngFor="let item of homeImagesURL | slice:0:1" [ngStyle]="{'background-image': 'url(' + item + ')'}">
+        </ngx-item>
+        <button NgxCarouselPrev></button>
+        <button NgxCarouselNext></button>
+    </ngx-carousel>
+    <div class="banner">
+        <div class="banner-bottom"></div>
+        <h1 class="banner-title"><b>{{LANGUAGE.ACADEMIC}}</b></h1>
+    </div>
+</div>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item">
+            <a routerLink = "/trang-chu" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.HOME_PAGE}}</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a routerLink="/hoc-vu" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.ACADEMIC}}</a>
+        </li>
+        <li class="breadcrumb-item active">
+            {{LANGUAGE.SCHEDULE}}
+        </li>
+    </ol>
+</nav>
+<div class="row">
+    <div class="col-md-4 col-lg-3 left-navigation">
+        <ul class="nav nav-tabs d-none d-md-block">
+            <li class="nav-item" >
+                <a class="nav-link " id="JCenter-tab"  routerLink="/hoc-vu/lich-hoc" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.SCHEDULE}}</a>
+            </li>
+            <li class="nav-item" >
+                <a class="nav-link " id="JCenter-tab"  routerLink="/hoc-vu/lich-thi" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.EXAM_SCHEDULE}}</a>
+            </li>
+            <li class="nav-item" > 
+                <a class="nav-link" id="JCenter-tab" routerLink="/hoc-vu/diem-thi" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}"> {{LANGUAGE.MARK}}</a>
+            </li>
+        </ul>
+    </div>
+    <div class="col-md-8 col-lg-9">
+        <div class="tab-content">
+            <div class="container">
+                <h1 id="schedule">
+                    <b>{{LANGUAGE.SCHEDULE}}</b>
+                </h1>
+                <div class="detail-schedule">
+                    <table class="table table-hover table-bordered table-striped" id="lichthi">
+                        <thead>
+                            <tr>
+                                <th scope="col">{{LANGUAGE.NAME_CLASS}}</th>
+                                <th scope="col">{{LANGUAGE.SCHEDULE_TIME}}</th>
+                                <th scope="col">{{LANGUAGE.LEARN_TIME}}</th>
+                                <th scope="col">{{LANGUAGE.LEARNOPENING}}</th>
+                            </tr>
+                        </thead>
+                        <tr *ngFor="let item of openingSchedule">
+                            <td>{{ item.Name }}</td>
+                            <td class="schedule">{{ item.Time }}</td>
+                            <td>{{ item.TotalTime }} Giờ / khóa</td>
+                            <td>{{ item.Openday }}</td>
+                        </tr>
+                    </table>
+                </div>
+                <button class="btn btn" type="submit" name="submit"><a href="{{imageQnuJapan[0]}}" >{{LANGUAGE.DOWNLOAD}}</a></button>
+            </div>
+        </div>
+    </div>
+</div>

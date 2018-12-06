@@ -1,0 +1,12 @@
+.container {
+    margin: -25px 0;
+}
+.btn{
+	float: right;
+}
+button a{
+	color: white;
+}
+button a:hover{
+	text-decoration: none;
+}

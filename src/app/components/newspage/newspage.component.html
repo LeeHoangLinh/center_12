@@ -1,0 +1,83 @@
+<div class="custom-container">
+  <ngx-carousel [inputs]="carouselBanner" [moveToSlide]="1" (onMove)="onmoveFn($event)">
+    <ngx-item NgxCarouselItem class="bannerStyle" *ngFor="let item of homeImagesURL | slice:0:1" [ngStyle]="{'background-image': 'url(' + item + ')'}">
+    </ngx-item>
+    <button NgxCarouselPrev></button>
+    <button NgxCarouselNext></button>
+  </ngx-carousel>
+  <div class="banner">
+    <div class="banner-bottom"></div>
+    <h1 class="banner-title"><b>{{LANGUAGE.NEWS_AND_EVENTS}}</b></h1>
+  </div>
+</div>
+<!-- creat breadscrumb -->
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item">
+      <a routerLink="/trang-chu" [queryParams]="{lang: lang ? 'jp' : 'vi'}">{{LANGUAGE.HOME_PAGE}}</a>
+    </li>
+    <li class="breadcrumb-item ">
+      <a routerLink="/tin-tuc-su-kien" [queryParams]="{lang: lang ? 'jp' : 'vi'}">{{LANGUAGE.NEWS_AND_EVENTS}}</a>
+    </li>
+    <li class="breadcrumb-item active" *ngIf = " EventsFirst != undifile"> {{EventsFirst.Name}}</li>
+    <li class="breadcrumb-item active" *ngIf = " newItemData != undifile"> {{newItemData.Name}}</li>
+  </ol>
+</nav>
+<!-- article Events -->
+<div id="article" class="container">
+    <div id="FirstNews" class="row">
+        <a class="row mr-0 ml-0 post-highlight" (click) = "OnChangeActicrles()">
+            <div class="col-lg-7" >
+                <img [src]="[ImageEvent]" class="card-img-top" alt="news-main"/>
+            </div>
+            <div class="col-lg-5 card-body card-wrap">
+                <h5 class="card-title" [innerHTML]="eventsFirst.Name">
+                </h5>
+                <p class="card-text">
+                    <span [innerHTML]="eventsFirst.Object"></span>
+                    <span class="read-more"> {{LANGUAGE.CONTINUE_READING}}</span>
+                </p>
+            </div> 
+        </a>
+    </div>
+    <!-- display article for news body -->
+    <div id="articleNews" *ngIf = "OnChangeNews && newItemData != undifile" >
+        <p [innerHTML]="newItemData.Content">
+        </p>
+    </div>
+    <!-- display card news -->
+    <div class="card-container pb-5">
+        <div class="row">
+            <div class="col-md-6 col-lg-4 card-wrap" *ngFor="let item of IsNewsData ; let itemIndex = index ;">
+            <a class="card" (click) = "OnChangeNews(item.id)">
+                    <img class="card-img-top" [src]="[arrImage[itemIndex]]" alt="Card img cap">
+                    <div class="card-body">
+                        <h5 class="card-title">
+                            {{item.Name}}
+                        </h5>
+                        <p class="card-text">
+                            <span [innerHTML]="item.Object"></span>
+                            <span class="read-more"> {{LANGUAGE.CONTINUE_READING}}</span>
+                        </p>
+                    </div>
+                </a>
+            </div>
+        </div> 
+    </div>
+</div>
+    <!-- display First article -->
+    <div id="new-article" class="container"  *ngIf = " EventsFirst != undifile">
+        <div class="course-content pt-4 mb-0">
+            <h4>{{EventsFirst.Name}}</h4>       
+            <p class="mb-4" [innerHTML]="EventsFirst.Content"></p>           
+        </div>
+    </div>
+
+
+<!-- create Pagination -->
+<!-- <div class="pagination">
+  <ul>
+    <li *ngFor="let item of collection | paginate: { itemsPerPage: 10, currentPage: p }"></li>
+  </ul>
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div> -->

@@ -1,0 +1,76 @@
+.card-img-top {
+  max-height: 160px;
+  height: 100%;
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+.card-wrap {
+  box-shadow: none !important;
+}
+.recruitment {
+  background: url(https://japancenter.qnu.edu.vn/images/home/announce-image.jpg) no-repeat;
+  background-size: cover;
+  position: relative;
+  overflow: auto;
+  height: 410px;
+  margin-top: 10px !important;
+  /* Nội dung vượt quá thì sẽ thêm thanh scroll vào thành phần. */
+}
+@media (min-width: 576px) {
+  .carousel-item active.img-responsive{
+    max-width: 540px;
+  }
+  .recruitment .announce-wrapper {
+    margin: 0;
+    padding: 20px 15px;
+    height: 150px;
+    text-align: left;
+  }
+}
+.recruitment > .announce-wrapper {
+  background-color: rgba(255, 229, 235, 0.7);
+  max-width: 1000px;
+  margin: 25px auto;
+  padding: 35px 7% 15px 7%;
+  text-align: center;
+  height: 360px;
+}
+.block-title {
+  font-family: "Lemonada", sans-serif;
+  font-size: 21 px;
+  line-height: 1.5;
+  font-weight: bold;
+  color: #e11f26;
+}
+.card-wrap {
+  transition: 0.3s;
+  width: 100%;
+  margin-top: -30px !important;
+  margin-bottom: 0px !important;
+}
+.card-wrap:hover {
+  box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+}
+.card-text {
+  font-size: 24px;
+}
+.bannerStyle {
+  height: 310px;
+  max-width: 100%;
+  height: auto;
+  position: absolute;
+}
+.custom-container ngx-carousel button[NgxCarouselPrev] {
+  visibility: hidden;
+}
+
+.custom-container ngx-carousel button[NgxCarouselNext] {
+  visibility: hidden;
+}
+ngx-item {
+  height: 305px;
+  background-size: 100% 100%;
+}
+ngx-carousel {
+  margin: 0em 0 0 0;
+}

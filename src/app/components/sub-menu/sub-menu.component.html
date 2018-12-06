@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="container">
+            <div class="program">
+                <div class="row">
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-wrap">
+                            <div class="block-title-wrap">
+                                <img src="./assets/images/flower-icon-1.png" alt="flower icon">
+                                <h5 class="block-title">{{LANGUAGE.INTRODUCTION_PAGE}}</h5>
+                            </div>
+                            <ul>
+                                <li class="nav-item" *ngIf="isVietnamese">
+                                    <a class="nav-link " id="JCenter-tab" *ngFor="let x of introData; let i = index"
+                                        (click)="selectIntro(x)"><i class="fa fa-angle-right" aria-hidden="true"></i>{{x.Name}}</a>
+                                </li>
+                                <li class="nav-item" *ngIf="!isVietnamese">
+                                    <a class="nav-link " id="JCenter-tab" *ngFor="let x of introData; let i = index"
+                                        (click)="selectIntro(x)"><i class="fa fa-angle-right" aria-hidden="true"></i>{{x.Japanese_Name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-wrap">
+                            <div class="block-title-wrap">
+                                <img src="./assets/images/flower-icon-1.png" alt="flower icon">
+                                <h5 class="block-title">{{LANGUAGE.COURSE}}</h5>
+                            </div>
+                            <ul>
+                                <li>
+                                    <a routerLink="/khoa-hoc/cac-khoa-tieng-nhat-JLPT" [queryParams]="{lang: lang == 'vi' ? 'vi' : 'jp'}">
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>{{LANGUAGE.JLPT_COURSE}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/khoa-hoc/tieng-nhat-cho-thieu-nhi" [queryParams]="{lang: lang == 'vi' ? 'vi' : 'jp'}">
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>{{LANGUAGE.CHILDREN_COURSE}}
+                                    </a>
+                                </li>
+                                <li>
+                                    <a routerLink="/khoa-hoc/cac-khoa-ky-nang-mem" [queryParams]="{lang: lang == 'vi' ? 'vi' : 'jp'}">
+                                        <i class="fa fa-angle-right" aria-hidden="true"></i>{{LANGUAGE.SKILL_COURSE}}
+                                    </a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-wrap">
+                            <div class="block-title-wrap">
+                                <img src="./assets/images/flower-icon-1.png" alt="flower icon">
+                                <h5 class="block-title">{{LANGUAGE.SERVICE_AND_PARTNER}}</h5>
+                            </div>
+                            <ul>
+                                <li class="nav-item" *ngIf="isVietnamese">
+                                    <a class="nav-link" id="JCenter-tab" *ngFor="let x of serviceData; let i = index"
+                                        (click)="selectService(x)"><i class="fa fa-angle-right" aria-hidden="true"></i>{{x.Name}}</a>
+                                </li>
+                                <li class="nav-item" *ngIf="!isVietnamese">
+                                    <a class="nav-link" id="JCenter-tab" *ngFor="let x of serviceData; let i = index"
+                                        (click)="selectService(x)"><i class="fa fa-angle-right" aria-hidden="true"></i>{{x.Japanese_Name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-lg-3">
+                        <div class="card-wrap">
+                            <div class="block-title-wrap">
+                                <img src="./assets/images/flower-icon-1.png" alt="flower icon">
+                                <h5 class="block-title">{{LANGUAGE.CAREER_OPPOTUNITY}}</h5>
+                            </div>
+                            <ul>
+                                <li class="nav-item" *ngIf="isVietnamese">
+                                    <a class="nav-link" id="JCenter-tab" *ngFor="let x of careerData; let i = index"
+                                        (click)="selectCareer(x)"><i class="fa fa-angle-right" aria-hidden="true"></i>{{x.Name}}</a>
+                                </li>
+                                <li class="nav-item" *ngIf="!isVietnamese">
+                                    <a class="nav-link " id="JCenter-tab" *ngFor="let x of careerData ; let i = index"
+                                        (click)="selectCareer(x)"><i class="fa fa-angle-right" aria-hidden="true"></i>{{x.Japanese_Name}}</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

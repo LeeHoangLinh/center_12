@@ -1,0 +1,14 @@
+<div class="custom-container">
+    <h3>{{LANGUAGE.CONNECT}}</h3>
+    <ngx-carousel [inputs]="carouselBanner">
+        <ngx-item
+            (click)="onClickInPartnerLogo(homeImagesURL[i])"
+            NgxCarouselItem
+            *ngFor="let tile of homeImagesURL; let i = index;"
+            [ngStyle]="{'background-image': 'url(' + serverURL + tile.Logo.url + ')'}"
+        >
+        </ngx-item>
+        <button NgxCarouselPrev></button>
+        <button NgxCarouselNext></button>
+    </ngx-carousel>
+</div> 
