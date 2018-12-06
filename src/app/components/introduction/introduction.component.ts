@@ -19,6 +19,7 @@ import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 //import { $ } from 'protractor';
 import * as $ from 'jquery';
 import { default as LANG_VI } from '../../../lang/lang_vi';
+import { default as LANG_JP } from './../../../lang/lang_jp';
 import { NgbModalConfig, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 @Component({
   selector: 'app-introduction',
@@ -36,6 +37,7 @@ export class IntroductionComponent implements OnInit {
    sliderImages: any[] = [];
   sliderImagesURL: { [key: number]: string } = [];
   public LANGUAGE : any = LANG_VI;
+  public isVietnamese: boolean = true;
   TrungtamNhatBan = 'one';
   public page = 'one';
   carouselBanner: any;
@@ -44,6 +46,7 @@ export class IntroductionComponent implements OnInit {
   homeImagesURL: { [key: number]: string } = [];
   serverURL: any;
   data: any;
+  
  public introData: SafeHtml;
   // Carousel config
   index = 0;
@@ -81,14 +84,16 @@ export class IntroductionComponent implements OnInit {
     let categoriesURL = this._getDataService.getCategoriesURL();
     this.http.get(categoriesURL).subscribe(data => {
       this.categoriesData = data;
-      console.log('All categories',this.categoriesData);
+      // console.log('All categories',this.categoriesData);
 
       for(var i=0; i<this.categoriesData.length; i++) {
         if(this.categoriesData[i].Parent && (this.categoriesData[i].Parent.Name === this.LANGUAGE.INTRODUCTION_PAGE  || this.categoriesData[i].Parent.Japanese_Name === this.LANGUAGE.INTRODUCTION_PAGE )) {
           
           if(this.introductionsDataActive == undefined){
             this.introductionsDataActive = this.categoriesData[i];
+            console.log('le',this.categoriesData[i]);
           }
+          
 
           this.menuLeftData.push(this.categoriesData[i]);
           console.log('categories',this.categoriesData[i]);
@@ -99,6 +104,17 @@ export class IntroductionComponent implements OnInit {
   }  
 
   ngOnInit() {
+    // change language
+    this.route.queryParams.subscribe(data => {
+      if (data.lang === 'vi') {
+        this.isVietnamese = true;
+        this.LANGUAGE = LANG_VI;
+      } else {
+        this.isVietnamese = false;
+        this.LANGUAGE = LANG_JP;
+      }
+    });
+ 
     // Get language
     this.route.queryParams.subscribe(data => {
       this.lang = data.lang;
@@ -132,7 +148,7 @@ export class IntroductionComponent implements OnInit {
       for(var i=0; i<this.headerData.length; i++) {
         if(this.headerData[i].Slug === "/gioi-thieu") {
           this.introduction = this.headerData[i];
-          //console.log(this.headerData[i]);
+          // console.log(this.headerData[i]);
         }
       }
     });
@@ -148,6 +164,7 @@ export class IntroductionComponent implements OnInit {
        this.http.get(personnelURL).subscribe(data=>{
          this.personnelData = data;
          console.log('personal',this.personnelData);
+         
        })
      }
   }
