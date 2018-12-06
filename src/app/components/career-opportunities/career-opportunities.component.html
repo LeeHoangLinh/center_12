@@ -18,7 +18,8 @@
         <li class="breadcrumb-item ">
             <a routerLink="/co-hoi-nghe-nghiep/trung-tam-nhat-ban" [queryParams]="{lang: lang ? 'jp' : 'vi'}">{{LANGUAGE.CAREER_OPPOTUNITY}}</a>
         </li>
-        <li class="breadcrumb-item active" aria-current="page">{{LANGUAGE.JAPAN_CENTER}}</li>
+        <!-- <li class="breadcrumb-item active" aria-current="page">{{LANGUAGE.JAPAN_CENTER}}</li> -->
+        <li class="breadcrumb-item active" *ngIf = " itemContents != undefined"> {{itemContents.vietnameseName}}</li>
     </ol>
 </nav>
 <div class="row">

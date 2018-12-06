@@ -2,7 +2,7 @@
   <h3 class="text-center section-lg-title">{{LANGUAGE.NEWS_AND_EVENTS_UPPER_CASE}}</h3>
   <div class="row">
     <div class="col-md-4 card-wrap"> 
-      <a class="card" [routerLink]="[linkQnuJapan]">
+      <a class="card" (click) = "OnEventsFrist(eventsFrist)">
         <img class="card-img-top" [src]="[ImageFrist]">
         <div class="card-body">
           <p *ngIf="lang === 'vi'" [innerHTML]="eventNameFrist" style="font-size: 24px; color: black; font-weight: 600"></p>
@@ -15,7 +15,7 @@
       </a>
     </div>
     <div class="col-md-4 card-wrap"> 
-      <a class="card" [routerLink]="[linkDollJapan]">
+      <a class="card" (click) = "OnEventsSecond(eventsSecond)">
         <img class="card-img-top" [src]="[ImageSecond]">
         <div class="card-body">
             <p *ngIf="lang === 'vi'" [innerHTML]="eventNameSecond" style="font-size: 24px; color: black; font-weight: 600"></p>
@@ -28,14 +28,14 @@
       </a>
     </div>
     <div class="col-md-4 card-wrap">
-      <a class="card" [routerLink]="[linkAmbassJapan]" >
-        <img class="card-img-top" [src]="[ImageThrid]" alt="Card img cap">
+      <a class="card" (click) = "OnEventsSecond(eventsThird)">
+        <img class="card-img-top" [src]="[ImageThird]" alt="Card img cap">
         <div class="card-body">
-            <p *ngIf="lang === 'vi'" [innerHTML]="eventNameThrid" style="font-size: 24px; color: black; font-weight: 600"></p>
+            <p *ngIf="lang === 'vi'" [innerHTML]="eventNameThird" style="font-size: 24px; color: black; font-weight: 600"></p>
             <p *ngIf="lang === 'jp'" [innerHTML]="eventJapanNameThrid" style="font-size: 24px; color: black; font-weight: 600"></p>
             
-          <p class="card-text"  *ngIf="lang === 'vi'" [innerHTML]="eventObjectThrid"><span class="read-more"  [innerHTML]="LANGUAGE.CONTINUE_READING"  > </span></p>  
-          <p class="card-text"  *ngIf="lang === 'jp'" [innerHTML]="eventJpObjectThrid"> </p>
+          <p class="card-text"  *ngIf="lang === 'vi'" [innerHTML]="eventObjectThird"><span class="read-more"  [innerHTML]="LANGUAGE.CONTINUE_READING"  > </span></p>  
+          <p class="card-text"  *ngIf="lang === 'jp'" [innerHTML]="eventJpObjectThird"> </p>
           <span class="read-more"  [innerHTML]="LANGUAGE.CONTINUE_READING"></span>
         </div>
       </a>

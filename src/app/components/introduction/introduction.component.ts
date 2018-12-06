@@ -69,19 +69,53 @@ export class IntroductionComponent implements OnInit {
   personnelData:any;
   personDetail:any;
   results=[];
+  EventsFirst: any;
+
   constructor(
     private _titleService: Title,
     private http: HttpClient,
     private _getDataService: GetDataService,
     private _getImageService: GetImagesService,
-    private router:Router, 
+    private _router:Router, 
     private route: ActivatedRoute,
     config: NgbModalConfig,
     private modalService: NgbModal,
     private santized: DomSanitizer
   ) 
   {    
+    this.route.queryParams.subscribe(data => {
+      if (data.lang === 'vi') {
+        this.LANGUAGE = LANG_VI;
+      } else {
+        this.LANGUAGE = LANG_JP;
+      }
+    if (data.idFirst !== undefined) {
+      let categoriesURL = this._getDataService.getCategoriesURL();
+    this.http.get(categoriesURL).subscribe(data => {
+      this.categoriesData = data;
+      for(var i=0; i<this.categoriesData.length; i++) {
+        if(this.categoriesData[i].Parent && (this.categoriesData[i].Parent.Name === this.LANGUAGE.INTRODUCTION_PAGE  || this.categoriesData[i].Parent.Japanese_Name === this.LANGUAGE.INTRODUCTION_PAGE )) { 
+            this.introductionsDataActive = this.categoriesData[this.categoriesData.length - 3];
+        }
+      }
+    });
+    }
+
+    if (data.idThrid !== undefined) {
+      let categoriesURL = this._getDataService.getCategoriesURL();
+    this.http.get(categoriesURL).subscribe(data => {
+      this.categoriesData = data;
+      for(var i=0; i<this.categoriesData.length; i++) {
+        if(this.categoriesData[i].Parent && (this.categoriesData[i].Parent.Name === this.LANGUAGE.INTRODUCTION_PAGE  || this.categoriesData[i].Parent.Japanese_Name === this.LANGUAGE.INTRODUCTION_PAGE )) { 
+            this.introductionsDataActive = this.categoriesData[0];
+        }
+      }
+    });
+    }    
+    });
+    
     // get data introduction
+    
     let categoriesURL = this._getDataService.getCategoriesURL();
     this.http.get(categoriesURL).subscribe(data => {
       this.categoriesData = data;
@@ -97,7 +131,7 @@ export class IntroductionComponent implements OnInit {
           
 
           this.menuLeftData.push(this.categoriesData[i]);
-          console.log('categories',this.categoriesData[i]);
+          //console.log('categories',this.categoriesData[i]);
         }
       }
       this.introductionContent = this.santized.bypassSecurityTrustHtml(this.introductionsDataActive.contents.Content)
@@ -165,7 +199,6 @@ export class IntroductionComponent implements OnInit {
        this.http.get(personnelURL).subscribe(data=>{
          this.personnelData = data;
          console.log('personal',this.personnelData);
-         
        })
      }
   }
@@ -176,7 +209,7 @@ export class IntroductionComponent implements OnInit {
     this.personDetail.imageUrl = this.serverURL + person.Image.url;
     //open popup here
     $("#btnModal").click();
-    console.log('person', this.personDetail);
+    //console.log('person', this.personDetail);
    
   }
 

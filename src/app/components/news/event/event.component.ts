@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { GetDataService } from './../../../services/get-data/get-data.service';
 import { ScrollTopService } from './../../../services/scroll-top/scroll-top.service';
 import { GetImagesService } from './../../../services/get-image-slider/get-images.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import * as $ from 'jquery';
 
 import { default as LANG_VI } from '../../../../lang/lang_vi';
@@ -31,8 +31,8 @@ export class EventComponent implements OnInit {
   ImageFrist: any;
   eventsSecond: any;
   ImageSecond: any;
-  eventsThrid: any;
-  ImageThrid: any;
+  eventsThird: any;
+  ImageThird: any;
   eventNameFrist: any;
   eventJapanNameFrist: any;
   eventObjectFrist: any;
@@ -41,17 +41,18 @@ export class EventComponent implements OnInit {
   eventJapanNameSecond: any;
   eventObjectSecond: any;
   eventJpObjectSecond: any;
-  eventNameThrid: any;
-  eventJapanNameThrid: any;
-  eventObjectThrid: any;
-  eventJpObjectThrid: any;
+  eventNameThird: any;
+  eventJapanNameThird: any;
+  eventObjectThird: any;
+  eventJpObjectThird: any;
 
   constructor(
     private _scrollTop: ScrollTopService,
     private http: HttpClient,
     private _getDataService: GetDataService,
     private _route: ActivatedRoute,
-    private _getImageService: GetImagesService
+    private _getImageService: GetImagesService,
+    private router: Router
   ) {
     this.serverURL = this._getDataService.serverURL;
   }
@@ -77,8 +78,8 @@ export class EventComponent implements OnInit {
       this.eventsSecond = this.eventsData[this.eventsData.length - 2];
       this.ImageSecond = this.serverURL + this.eventsData[this.eventsData.length - 2].Thumbnail.url; 
 
-      this.eventsThrid = this.eventsData[this.eventsData.length - 3];
-      this.ImageThrid = this.serverURL + this.eventsData[this.eventsData.length - 3].Thumbnail.url;  
+      this.eventsThird = this.eventsData[this.eventsData.length - 3];
+      this.ImageThird = this.serverURL + this.eventsData[this.eventsData.length - 3].Thumbnail.url;  
 
       } 
       this.eventNameFrist = this.eventsFrist.Name;
@@ -91,10 +92,10 @@ export class EventComponent implements OnInit {
       this.eventObjectSecond = this.eventsSecond.Object;
       this.eventJpObjectSecond = this.eventsSecond.Object_Japanese;
   
-      this.eventNameThrid = this.eventsThrid.Name;
-      this.eventJapanNameThrid = this.eventsThrid.Japanese_Name;
-      this.eventObjectThrid = this.eventsThrid.Object;
-      this.eventJpObjectThrid = this.eventsThrid.Object_Japanese;
+      this.eventNameThird = this.eventsThird.Name;
+      this.eventJapanNameThird = this.eventsThird.Japanese_Name;
+      this.eventObjectThird = this.eventsThird.Object;
+      this.eventJpObjectThird = this.eventsThird.Object_Japanese;
 
     });
 
@@ -106,5 +107,12 @@ export class EventComponent implements OnInit {
     
   }
 
-  
+  //display first acticrle 
+  OnEventsFrist(eventsFrist){
+    this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { lang: this.lang == 'vi' ?'vi':'jp', idFirst: eventsFrist._id}});
+  }
+
+  OnEventsSecond(eventItem){
+    this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { lang: this.lang == 'vi' ?'vi':'jp', id: eventItem._id}});
+  }
 }

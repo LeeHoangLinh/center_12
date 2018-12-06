@@ -44,6 +44,7 @@ export class ServicePartnerComponent implements OnInit {
   Contents: any;
   serverURL: any;
   data: any;
+  newsFirst: any;
   getjobsURL: string;
   jobs;
   jobsItem;
@@ -90,10 +91,25 @@ export class ServicePartnerComponent implements OnInit {
         this.LANGUAGE = LANG_JP;
       }
       if (data.id !== undefined){
-        console.log(data.itemContent);
         let tempContents;
         let vietnameseSlug; 
         let itemContentURL = this.apiCategories + '/' + data.id;
+        this.http.get(itemContentURL).subscribe(data => {
+          tempContents = data;
+          this.itemContents.vietnameseContents = tempContents.contents.Content;
+          this.itemContents.vietnameseName =  tempContents.contents.Name;
+          vietnameseSlug = tempContents.contents.Name;
+          this.slug.vietnameseSlug = vietnameseSlug.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
+          window.location.hash = (this.slug.vietnameseSlug);
+          this.itemContents.japaneseContents = tempContents.contents.Japanese_Content;
+          this.itemContents.japaneseName =  tempContents.contents.Japanese_Name;
+        });
+      }
+
+      if (data.idSecond !== undefined){
+        let tempContents;
+        let vietnameseSlug; 
+        let itemContentURL = this.apiCategories + '/' + data.idSecond;
         this.http.get(itemContentURL).subscribe(data => {
           tempContents = data;
           this.itemContents.vietnameseContents = tempContents.contents.Content;
@@ -155,14 +171,11 @@ export class ServicePartnerComponent implements OnInit {
       this.http.get(itemContentURL).subscribe(data => {
         tempContents = data;
         this.itemContents.vietnameseContents = tempContents.contents.Content;
-        console.log(this.itemContents.vietnameseContents);
         this.itemContents.vietnameseName =  tempContents.contents.Name;
-        console.log(this.itemContents.vietnameseName);
         vietnameseSlug = tempContents.contents.Name;
         this.slug.vietnameseSlug = vietnameseSlug.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
         window.location.hash = (this.slug.vietnameseSlug);
         this.itemContents.japaneseContents = tempContents.contents.Japanese_Content;
-        console.log(this.itemContents.japaneseContents);
         this.itemContents.japaneseName =  tempContents.contents.Japanese_Name;
       });
   }

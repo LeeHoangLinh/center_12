@@ -86,6 +86,8 @@ export class NewspageComponent implements OnInit {
   ImageEvent;
 
   EventsFirst: any;
+  EventsSecond: any;
+  EventsThird: any;
   newHeaderData: any;
   imageHeaderData: string;
   newsPageItems:any[] = [];
@@ -104,6 +106,29 @@ export class NewspageComponent implements OnInit {
         this.LANGUAGE = LANG_VI;
       } else {
         this.LANGUAGE = LANG_JP;
+      }
+
+      if (data.idFirst !== undefined){
+        this.eventsURL = this._getDataService.getNewsURL();
+        this._http.get(this.eventsURL).subscribe(data =>{
+          this.eventsData = data;
+          for(var i = 0; i < this.eventsData.length; i++){
+            this.EventsFirst = this.eventsData[this.eventsData.length -1];
+          } 
+          $('#article').hide();
+          $('#new-article').show();
+          window.scrollTo(0, 0);      
+        });
+      }
+
+      if (data.id !== undefined){
+        let jlptItemDataURL = this._getDataService.getNewsItemURL(data.id);
+        this._http.get(jlptItemDataURL).subscribe(data => {
+          this.newItemData = data;
+          $('#FirstNews').hide();
+        });
+        window.scrollTo(0, 0);
+        
       }
     });
     //get data newspage for card
