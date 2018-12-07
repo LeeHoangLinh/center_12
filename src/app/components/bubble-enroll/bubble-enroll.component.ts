@@ -75,7 +75,6 @@ export class BubbleEnrollComponent implements OnInit {
       });
     });
 
-
     this.createForm();
 
   }

@@ -45,17 +45,17 @@
     </div>
     <!-- display article for news body -->
     <div class="course-content" id="articleNews" *ngIf = "OnChangeNews && newItemData != undefined" >
-        <p *ngIf=" isVietnamese" [innerHTML]="newItemData.Content">
+        <p *ngIf=" isVietnamese" [innerHTML]="CkNewsData">
         </p>
-        <p *ngIf=" !isVietnamese" [innerHTML]="newItemData.Japanese_Content">
+        <p *ngIf=" !isVietnamese" [innerHTML]="JapanCkNewsData">
         </p>
     </div>
     <!-- display card news -->
     <div class="card-container pb-5">
         <div class="row">
-            <div class="col-md-6 col-lg-4 card-wrap" *ngFor="let item of IsNewsData ; let itemIndex = index ;">
+            <div class="col-md-6 col-lg-4 card-wrap" *ngFor="let item of IsNewsData | paginate: { itemsPerPage: 6, currentPage: p } ; let itemIndex = index;">
             <a class="card" (click) = "OnChangeNews(item)">
-                    <img class="card-img-top" [src]="[arrImage[itemIndex]]" alt="Card img cap">
+                    <img class="card-img-top" [src]="[arrImage[itemIndex+(p-1)*6]]" alt="Card img cap">
                     <div class="card-body">
                         <h5 *ngIf=" isVietnamese" class="card-title">
                             {{item.Name}}
@@ -73,24 +73,19 @@
             </div>
         </div> 
     </div>
-</div>
+</div>s
     <!-- display First article -->
     <div id="new-article" class="container"  *ngIf = " EventsFirst != undefined">
         <div class="course-content pt-4 mb-0">
             <h4 *ngIf=" isVietnamese">{{EventsFirst.Name}}</h4>  
             <h4 *ngIf=" !isVietnamese">{{EventsFirst.Japanese_Name}}</h4>      
-            <p class="mb-4" *ngIf=" isVietnamese" [innerHTML]="EventsFirst.Content"></p> 
-            <p class="mb-4" *ngIf=" !isVietnamese" [innerHTML]="EventsFirst.Japanese_Content"></p>  
-                     
+            <p class="mb-4" *ngIf=" isVietnamese" [innerHTML]="CkeventsFirst"></p> 
+            <p class="mb-4" *ngIf=" !isVietnamese" [innerHTML]="JapanCkeventsFirst"></p>                      
         </div>
     </div>
 
-
 <!-- create Pagination -->
-<!--  <div class="pagination">
-  <ul >
-    <li *ngFor="let item of collection | paginate: { itemsPerPage: 20, currentPage: p }">{{eventName}}</li>
-  </ul>
+ <div class="pagination">
   <pagination-controls (pageChange)="p = $event"></pagination-controls>
 </div> 
- -->
+

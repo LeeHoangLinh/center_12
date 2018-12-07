@@ -1,7 +1,4 @@
-.card {
-	height: 430px;
-	max-height: 430px !important;
-}
+
 .card-text {
     margin-bottom: 10px;
     color: black;
@@ -53,6 +50,7 @@ a:-webkit-any-link {
     border: solid 1px #e5e5e5;
     overflow: hidden;
     margin-left: 15px;
+    width: 100%;
 }
 #FirstNews{
     margin-left: 15px;

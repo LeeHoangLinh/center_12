@@ -74,11 +74,14 @@ export class NewspageComponent implements OnInit {
   NewsData;
   IsNewsData;
   CkNewsData : SafeHtml;
+  JapanCkNewsData : SafeHtml;
   SubFirstData;
   imageNew;
   eventsURL;
   eventsData;
   eventsFirst = [];
+  CkeventsFirst:SafeHtml = [];
+  JapanCkeventsFirst:SafeHtml = [];
   imageEvent;
   arrImage:any[] = [];
   newArrImage: any[]= [];
@@ -125,6 +128,8 @@ export class NewspageComponent implements OnInit {
           this.eventsData = data;
           for(var i = 0; i < this.eventsData.length; i++){
             this.EventsFirst = this.eventsData[this.eventsData.length -1];
+            this.CkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Content);  
+            this.JapanCkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Japanese_Content);
           } 
           $('#article').hide();
           $('#new-article').show();
@@ -137,6 +142,8 @@ export class NewspageComponent implements OnInit {
         let jlptItemDataURL = this._getDataService.getNewsItemURL(data.id);
         this._http.get(jlptItemDataURL).subscribe(data => {
           this.newItemData = data;
+          this.CkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Content);
+          this.JapanCkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Japanese_Content);
           $('#FirstNews').hide();
         });
         window.scrollTo(0, 0);
@@ -168,11 +175,12 @@ export class NewspageComponent implements OnInit {
    }
    // display acticrle news
    OnChangeNews(item){
-     console.log(item);
     let jlptItemDataURL = this._getDataService.getNewsItemURL(item._id);
     this._http.get(jlptItemDataURL).subscribe(data => {
       this.newItemData = data;
-      this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { lang: this.lang == 'vi' ?'vi':'jp', name: item.Name}});
+      this.CkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Content);
+      this.JapanCkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Japanese_Content);
+      //this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { lang: this.lang == 'vi' ?'vi':'jp', name: item.Name}});
     });
     window.scrollTo(0, 0);
     $('#FirstNews').hide();
@@ -184,8 +192,9 @@ export class NewspageComponent implements OnInit {
     this._http.get(this.eventsURL).subscribe(data =>{
       this.eventsData = data;
       for(var i = 0; i < this.eventsData.length; i++){
-      this.EventsFirst = this.eventsData[this.eventsData.length -1];
-      //this.imageEvent = this.serverURL + this.evnetsData[0].Thumbnail.url;     
+      this.EventsFirst = this.eventsData[this.eventsData.length -1]; 
+      this.CkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Content);  
+      this.JapanCkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Japanese_Content);
       }       
     });
     $('#article').hide();

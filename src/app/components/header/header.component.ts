@@ -3,6 +3,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 // _http built-in service
 import { HttpClient } from '@angular/common/http';
+import { Title } from '@angular/platform-browser';
 
 // Jquery
 import * as $ from 'jquery';
@@ -46,11 +47,13 @@ export class HeaderComponent implements OnInit {
   public itemData1: any=[];
   public isVietnamese: boolean;
 
+
   @Output('isChangeLanguage') language = new EventEmitter<boolean>();
 
   // Vietnamese is default language
   public lang: string = 'vi';
   constructor(
+    private _titleService: Title,
     private _http: HttpClient,
     private _getDataService: GetDataService,
     private router: Router,
@@ -83,9 +86,11 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this._activatedRoute.queryParams.subscribe(data => {
       if (data.lang === 'vi') {
+        this.lang = 'vi';
         this.isVietnamese = true;
         this.LANGUAGE = LANG_VI;
       } else {
+        this.lang ='jp';
         this.isVietnamese = false;
         this.LANGUAGE = LANG_JP;
       }
@@ -201,6 +206,30 @@ export class HeaderComponent implements OnInit {
     } else {
       $('#bubble').removeClass('verticle-align');
     }
+
+    // Get Title for each Header and menu bar
+    let title = this._titleService.getTitle();
+    if(title === LANG_VI.HOME_PAGE || title === LANG_JP.HOME_PAGE){
+      this._titleService.setTitle(this.LANGUAGE.HOME_PAGE);
+    } 
+     if(title === LANG_VI.INTRODUCTION_PAGE || title === LANG_JP.INTRODUCTION_PAGE){
+      this._titleService.setTitle(this.LANGUAGE.INTRODUCTION_PAGE);
+    } 
+    if(title === LANG_VI.ACADEMIC || title === LANG_JP.ACADEMIC){
+      this._titleService.setTitle(this.LANGUAGE.ACADEMIC);
+    } 
+    if(title === LANG_VI.COURSE || title === LANG_JP.COURSE){
+      this._titleService.setTitle(this.LANGUAGE.COURSE);
+    } 
+    if(title === LANG_VI.NEWS_AND_EVENTS || title === LANG_JP.NEWS_AND_EVENTS){
+      this._titleService.setTitle(this.LANGUAGE.NEWS_AND_EVENTS);
+    } 
+    if(title === LANG_VI.SERVICE_AND_PARTNER || title === LANG_JP.SERVICE_AND_PARTNER){
+      this._titleService.setTitle(this.LANGUAGE.SERVICE_AND_PARTNER);
+    } 
+    if(title === LANG_VI.CAREER_OPPOTUNITY || title === LANG_JP.CAREER_OPPOTUNITY){
+      this._titleService.setTitle(this.LANGUAGE.CAREER_OPPOTUNITY);
+    } 
   }
 
 }

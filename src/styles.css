@@ -127,7 +127,7 @@ li {
 }
 
 a, a:visited {
-    color: black;
+    color: black !important;
     text-decoration: none;
 }
 
@@ -195,10 +195,12 @@ pagination-controls {
 
 .row {
     margin-top: 2em;
+    margin-bottom: 20px;
 }
 
 .card-wrap {
-    margin-bottom: 30px;
+    margin-bottom: 0 !important;
+    padding: 10px 10px
 }
 
 .card {
@@ -252,8 +254,7 @@ pagination-controls {
 
 .course-content {
     padding: 30px;
-    margin: 40px 0 60px;
-    border: 1px solid #e5e5e5;
+    margin: 20px 0 60px;
     background-color: white;
 }
 

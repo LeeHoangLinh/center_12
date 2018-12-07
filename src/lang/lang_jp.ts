@@ -73,7 +73,7 @@ const LANG_JP = {
      SUBMIT : '転記',
      CONTENT : 'コンテンツ',
      TITLE : 'タイトル',
-     SIGN_UP : 'サインアップ',
+     SIGN_UP : '登録',
      REGISTER : '登録',
      ENROLL_LIST : '登録されたリスト',
      CONTACTED_LIST : '連絡先',
