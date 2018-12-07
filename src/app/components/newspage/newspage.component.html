@@ -19,8 +19,10 @@
     <li class="breadcrumb-item ">
       <a routerLink="/tin-tuc-su-kien" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.NEWS_AND_EVENTS}}</a>  
     </li>
-    <li class="breadcrumb-item active" *ngIf = " EventsFirst != undefined"> {{EventsFirst.Name}}</li>
-    <li class="breadcrumb-item active" *ngIf = " newItemData != undefined"> {{newItemData.Name}}</li>
+    <li class="breadcrumb-item active" *ngIf = " isVietnamese && EventsFirst != undefined"> {{EventsFirst.Name}}</li>
+    <li class="breadcrumb-item active" *ngIf = " isVietnamese && newItemData != undefined"> {{newItemData.Name}}</li>
+    <li class="breadcrumb-item active" *ngIf = " !isVietnamese && EventsFirst != undefined"> {{EventsFirst.Japanese_Name}}</li>
+    <li class="breadcrumb-item active" *ngIf = " !isVietnamese && newItemData != undefined"> {{newItemData.Japanese_Name}}</li>
   </ol>
 </nav>
 <!-- article Events -->
