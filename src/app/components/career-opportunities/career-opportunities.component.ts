@@ -49,6 +49,7 @@ export class CareerOpportunitiesComponent implements OnInit {
   jobsItem;
   careerDataActive: any;
   newsFour: any;
+  lang: string;
 
   // Carousel config
   index = 0;
@@ -82,49 +83,23 @@ export class CareerOpportunitiesComponent implements OnInit {
 
   ngOnInit() {
 
+    let hasData = false;
     this.apiCategories = this._getDataService.getCategoriesURL();
     this._route.queryParams.subscribe(data => {
       if (data.lang === 'vi') {
+        this.lang = 'vi';
         this.isVietnamese = true;
         this.LANGUAGE = LANG_VI;
       } else {
+        this.lang ='jp';
         this.isVietnamese = false;
         this.LANGUAGE = LANG_JP;
       }
       if (data.id !== undefined){
-        console.log(data.itemContent);
-        let tempContents;
-        let vietnameseSlug; 
-        let itemContentURL = this.apiCategories + '/' + data.id;
-        this.http.get(itemContentURL).subscribe(data => {
-          tempContents = data;
-          this.itemContents.vietnameseContents = tempContents.contents.Content;
-          this.itemContents.vietnameseName =  tempContents.contents.Name;
-          vietnameseSlug = tempContents.contents.Name;
-          this.slug.vietnameseSlug = vietnameseSlug.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
-          window.location.hash = (this.slug.vietnameseSlug);
-          this.itemContents.japaneseContents = tempContents.contents.Japanese_Content;
-          this.itemContents.japaneseName =  tempContents.contents.Japanese_Name;
-        });
+        this.selectItem(data.id);
+        hasData = true;   
       }
-
-      
-      if (data.idFour !== undefined){
-        let tempContents;
-        let vietnameseSlug; 
-        let itemContentURL = this.apiCategories + '/' + data.idFour;
-        this.http.get(itemContentURL).subscribe(data => {
-          tempContents = data;
-          this.itemContents.vietnameseContents = tempContents.contents.Content;
-          this.itemContents.vietnameseName =  tempContents.contents.Name;
-          vietnameseSlug = tempContents.contents.Name;
-          this.slug.vietnameseSlug = vietnameseSlug.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
-          window.location.hash = (this.slug.vietnameseSlug);
-          this.itemContents.japaneseContents = tempContents.contents.Japanese_Content;
-          this.itemContents.japaneseName =  tempContents.contents.Japanese_Name;
-        });
-      }
-    });
+      });
 
     this._titleService.setTitle(this.LANGUAGE.CAREER_OPPOTUNITY);
 
@@ -140,19 +115,23 @@ export class CareerOpportunitiesComponent implements OnInit {
             this.homeImagesURL[k] = this.serverURL + this.homeImages[i].Image[k].url;
           }
         }
-      }
+      }     
     });
 
     this.apiCategories = this._getDataService.getCategoriesURL();
     this.http.get(this.apiCategories).subscribe(data => {
       this.item = data;
+      console.log(this.item);
       for (let i=0; i< this.item.length; i++) {
         if (this.item[i].Parent && (this.item[i].Parent.Name === this.LANGUAGE.CAREER_OPPOTUNITY || this.item[i].Parent.Japanese_Name === this.LANGUAGE.CAREER_OPPOTUNITY)) {
           this.itemData.push(this.item[i]);
-          //console.log(this.itemData);
-          //console.log(this.item[i].Name);
-
         }
+      }
+      if (this.itemData !== undefined && !hasData){
+        this.itemContents.japaneseContents = this.itemData[0].contents.Japanese_Content;
+        this.itemContents.japaneseName =  this.itemData[0].contents.Japanese_Name;
+        this.itemContents.vietnameseContents = this.itemData[0].contents.Content;
+        this.itemContents.vietnameseName =  this.itemData[0].contents.Name;
       }
     });
   }
@@ -170,10 +149,10 @@ export class CareerOpportunitiesComponent implements OnInit {
     }
   }
 
-  selectItem(item) {
+  selectItem(id) {
     let tempContents;
     let vietnameseSlug; 
-      let itemContentURL = this.apiCategories + '/' + item._id;
+      let itemContentURL = this.apiCategories + '/' + id;
       this.http.get(itemContentURL).subscribe(data => {
         tempContents = data;
         this.itemContents.vietnameseContents = tempContents.contents.Content;

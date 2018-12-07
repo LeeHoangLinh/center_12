@@ -13,3 +13,9 @@ img{
 	font-weight: 700;
 	color: #495057 !important;
 }
+.breadcrumb-item {
+	color: inherit !important;
+}
+/*li a {
+    color: black !important;
+}*/

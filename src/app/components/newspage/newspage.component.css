@@ -51,7 +51,14 @@ a:-webkit-any-link {
 .post-highlight{
     height: 325px;
     border: solid 1px #e5e5e5;
+    overflow: hidden;
+    margin-left: 15px;
 }
+#FirstNews{
+    margin-left: 15px;
+    margin-right: 0;
+}
+
 .breadcrumb-item a:hover {
    color:inherit;
 }
@@ -72,4 +79,19 @@ a:hover {
 }
 .mb-4{
     margin-left: 60px
+}
+.col-lg-7{
+    padding-left: 0;
+}
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    margin-right: -15px;
+    margin-left: 0;
+}
+.ngx-pagination .current {
+    padding: 0.1875rem 0.625rem;
+    background: rgb(188, 0, 45) !important;
+    color: #fefefe;
+    cursor: default;
 }

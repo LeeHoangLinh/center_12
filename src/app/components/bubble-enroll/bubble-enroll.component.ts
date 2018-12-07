@@ -35,7 +35,6 @@ export class BubbleEnrollComponent implements OnInit {
     this.registerURL = this._getDataService.getClassesURL();
     this.http.get(this.registerURL).subscribe(data => {
       this.registerData = data;
-      console.log(data);
     });
   }
   ngOnInit() {

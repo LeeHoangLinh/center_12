@@ -69,6 +69,7 @@ export class IntroductionComponent implements OnInit {
   personnelData:any;
   personDetail:any;
   results=[];
+  id:string;
   EventsFirst: any;
 
   constructor(
@@ -89,34 +90,28 @@ export class IntroductionComponent implements OnInit {
       } else {
         this.LANGUAGE = LANG_JP;
       }
-    if (data.idFirst !== undefined) {
+    if (data.id !== undefined) {
       let categoriesURL = this._getDataService.getCategoriesURL();
-    this.http.get(categoriesURL).subscribe(data => {
-      this.categoriesData = data;
+      this.http.get(categoriesURL).subscribe(dataObj => {
+      this.categoriesData = dataObj;
+      let arrTemp = [];
       for(var i=0; i<this.categoriesData.length; i++) {
         if(this.categoriesData[i].Parent && (this.categoriesData[i].Parent.Name === this.LANGUAGE.INTRODUCTION_PAGE  || this.categoriesData[i].Parent.Japanese_Name === this.LANGUAGE.INTRODUCTION_PAGE )) { 
-            this.introductionsDataActive = this.categoriesData[this.categoriesData.length - 3];
+          arrTemp.push(this.categoriesData[i]);
         }
+      }
+      if (arrTemp[data.id] !== undefined){
+        this.introductionsDataActive = arrTemp[data.id];
       }
     });
     }
-
-    if (data.idThrid !== undefined) {
-      let categoriesURL = this._getDataService.getCategoriesURL();
-    this.http.get(categoriesURL).subscribe(data => {
-      this.categoriesData = data;
-      for(var i=0; i<this.categoriesData.length; i++) {
-        if(this.categoriesData[i].Parent && (this.categoriesData[i].Parent.Name === this.LANGUAGE.INTRODUCTION_PAGE  || this.categoriesData[i].Parent.Japanese_Name === this.LANGUAGE.INTRODUCTION_PAGE )) { 
-            this.introductionsDataActive = this.categoriesData[0];
-        }
-      }
-    });
-    }    
     });
     
     // get data introduction
     
     let categoriesURL = this._getDataService.getCategoriesURL();
+    
+    
     this.http.get(categoriesURL).subscribe(data => {
       this.categoriesData = data;
       // console.log('All categories',this.categoriesData);
@@ -126,7 +121,7 @@ export class IntroductionComponent implements OnInit {
           
           if(this.introductionsDataActive == undefined){
             this.introductionsDataActive = this.categoriesData[i];
-            console.log('le',this.categoriesData[i]);
+            //console.log('le',this.categoriesData[i]);
           }
           
 
@@ -135,6 +130,17 @@ export class IntroductionComponent implements OnInit {
         }
       }
       this.introductionContent = this.santized.bypassSecurityTrustHtml(this.introductionsDataActive.contents.Content)
+      this.route.params.subscribe(params => {
+        this.id = params['id'];
+         for(var i=0; i<this.categoriesData.length; i++) {
+           if (this.id != undefined) {
+                  const slug = "/gioi-thieu/" + this.id;
+                  if(this.categoriesData[i].Slug === slug) {
+                    this.onChangeIntroduction(this.categoriesData[i]);
+              }
+            }
+         }
+      });
     });
   }  
 
@@ -198,7 +204,7 @@ export class IntroductionComponent implements OnInit {
        let personnelURL = this._getDataService.getpersonnelURL();
        this.http.get(personnelURL).subscribe(data=>{
          this.personnelData = data;
-         console.log('personal',this.personnelData);
+        // console.log('personal',this.personnelData);
        })
      }
   }

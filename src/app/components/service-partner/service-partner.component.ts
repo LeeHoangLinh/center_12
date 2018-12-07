@@ -48,6 +48,7 @@ export class ServicePartnerComponent implements OnInit {
   getjobsURL: string;
   jobs;
   jobsItem;
+  lang: string;
 
   // Carousel config
   index = 0;
@@ -80,46 +81,22 @@ export class ServicePartnerComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-
+    
+    let hasData = false;
     this.apiCategories = this._getDataService.getCategoriesURL();
     this._route.queryParams.subscribe(data => {
       if (data.lang === 'vi') {
+        this.lang = 'vi';
         this.isVietnamese = true;
         this.LANGUAGE = LANG_VI;
       } else {
+        this.lang='jp';
         this.isVietnamese = false;
         this.LANGUAGE = LANG_JP;
       }
       if (data.id !== undefined){
-        let tempContents;
-        let vietnameseSlug; 
-        let itemContentURL = this.apiCategories + '/' + data.id;
-        this.http.get(itemContentURL).subscribe(data => {
-          tempContents = data;
-          this.itemContents.vietnameseContents = tempContents.contents.Content;
-          this.itemContents.vietnameseName =  tempContents.contents.Name;
-          vietnameseSlug = tempContents.contents.Name;
-          this.slug.vietnameseSlug = vietnameseSlug.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
-          window.location.hash = (this.slug.vietnameseSlug);
-          this.itemContents.japaneseContents = tempContents.contents.Japanese_Content;
-          this.itemContents.japaneseName =  tempContents.contents.Japanese_Name;
-        });
-      }
-
-      if (data.idSecond !== undefined){
-        let tempContents;
-        let vietnameseSlug; 
-        let itemContentURL = this.apiCategories + '/' + data.idSecond;
-        this.http.get(itemContentURL).subscribe(data => {
-          tempContents = data;
-          this.itemContents.vietnameseContents = tempContents.contents.Content;
-          this.itemContents.vietnameseName =  tempContents.contents.Name;
-          vietnameseSlug = tempContents.contents.Name;
-          this.slug.vietnameseSlug = vietnameseSlug.toLowerCase().replace(/ /g,'-').replace(/[^\w-]+/g,'');
-          window.location.hash = (this.slug.vietnameseSlug);
-          this.itemContents.japaneseContents = tempContents.contents.Japanese_Content;
-          this.itemContents.japaneseName =  tempContents.contents.Japanese_Name;
-        });
+        this.selectItem(data.id);
+        hasData = true;
       }
     });
 
@@ -148,6 +125,12 @@ export class ServicePartnerComponent implements OnInit {
           this.itemData.push(this.item[i]);
         }
       }
+      if (this.itemData !== undefined && !hasData){
+        this.itemContents.japaneseContents = this.itemData[0].contents.Japanese_Content;
+        this.itemContents.japaneseName =  this.itemData[0].contents.Japanese_Name;
+        this.itemContents.vietnameseContents = this.itemData[0].contents.Content;
+        this.itemContents.vietnameseName =  this.itemData[0].contents.Name;
+      }
     });
   }
 
@@ -164,10 +147,11 @@ export class ServicePartnerComponent implements OnInit {
     }
   }
 
-  selectItem(item) {
+  selectItem(id) {
+    //console.log(id);
     let tempContents;
     let vietnameseSlug; 
-      let itemContentURL = this.apiCategories + '/' + item._id;
+      let itemContentURL = this.apiCategories + '/' + id;
       this.http.get(itemContentURL).subscribe(data => {
         tempContents = data;
         this.itemContents.vietnameseContents = tempContents.contents.Content;

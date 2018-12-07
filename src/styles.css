@@ -176,6 +176,7 @@ pagination-controls {
     text-align: center;
     margin: 0 auto !important;
     padding: 0 !important;
+
 }
 
 .pagination ul li {
@@ -335,10 +336,6 @@ th {
     min-width: 45px;
 }
 
-thead {
-    background-color: brown;
-    color: white;
-}
 
 @media only screen and (max-width: 767px) {
     #schedule {
@@ -469,8 +466,8 @@ thead {
     /* border-color:#d9d9d9 */
     border: 1px solid  #b3b3b3;
 }
-.table table th{
+/*.table table th{
     font-weight:700;
     background:#fafafa;
 }
-
+*/
