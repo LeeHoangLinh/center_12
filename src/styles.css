@@ -134,7 +134,7 @@ a, a:visited {
 a:hover {
     color: #dc3545;
     text-decoration: none;
-
+    cursor: pointer;
 }
 
 .nav-tabs {
@@ -256,6 +256,7 @@ pagination-controls {
     padding: 30px;
     margin: 20px 0 60px;
     background-color: white;
+    border: 1px solid #e5e5e5;
 }
 
 .course-content img {
@@ -460,6 +461,7 @@ th {
     border-collapse:collapse;
     border-spacing:0;
     border:1px double #b3b3b3;
+    margin: 1em auto; margin-top: 1em; margin-right: auto; margin-bottom: 1em; margin-left: auto;
 }
 .table table td,.table table th{
     min-width:2em;

@@ -1,6 +1,7 @@
 import { Component, OnInit,ViewEncapsulation } from '@angular/core';
 import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
 import { Title } from '@angular/platform-browser';
+import { Location } from '@angular/common';
 
 import * as $ from 'jquery';
 
@@ -109,7 +110,8 @@ export class NewspageComponent implements OnInit {
     private _getImageService: GetImagesService,
     private _route: ActivatedRoute,
     private santized: DomSanitizer,
-    private router : Router
+    private router : Router,
+    private location: Location
   ) { 
     // Change language
     this._route.queryParams.subscribe(data => {
@@ -127,16 +129,16 @@ export class NewspageComponent implements OnInit {
         this._http.get(this.eventsURL).subscribe(data =>{
           this.eventsData = data;
           for(var i = 0; i < this.eventsData.length; i++){
-            this.EventsFirst = this.eventsData[this.eventsData.length -1];
-            this.CkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Content);  
-            this.JapanCkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Japanese_Content);
-          } 
-          $('#article').hide();
-          $('#new-article').show();
-          window.scrollTo(0, 0);        
+          this.EventsFirst = this.eventsData[this.eventsData.length -1]; 
+          this.CkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Content);  
+          this.JapanCkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Japanese_Content);
+          }      
         });
-
+        this.newItemData = undefined;
+        this.EventsFirst = undefined;
+        this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { slug:data.idFirst,lang:this.lang == 'vi' ?'vi':'jp'}});                
       }
+      $('#FirstNews').hide();
 
       if (data.id !== undefined){
         let jlptItemDataURL = this._getDataService.getNewsItemURL(data.id);
@@ -144,13 +146,11 @@ export class NewspageComponent implements OnInit {
           this.newItemData = data;
           this.CkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Content);
           this.JapanCkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Japanese_Content);
-          $('#FirstNews').hide();
-        });
-        window.scrollTo(0, 0);
-        
+        }); 
+       this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { slug:data.id,lang:this.lang == 'vi' ?'vi':'jp'}});
       }
     });
-    //get data newspage for card
+    //get data news page for card
     this.newURL = this._getDataService.getNewsURL();
     this._http.get(this.newURL).subscribe(data =>{
       this.newData = data;
@@ -175,19 +175,35 @@ export class NewspageComponent implements OnInit {
    }
    // display acticrle news
    OnChangeNews(item){
+    this.IsNewsData = this.NewsData.slice(1, this.NewsData.length);
     let jlptItemDataURL = this._getDataService.getNewsItemURL(item._id);
     this._http.get(jlptItemDataURL).subscribe(data => {
+      let tempData = [];
+      for(var i = 0; i < this.IsNewsData.length; i++){
+        if(tempData.length < 3 && this.IsNewsData[i].id !== item.id){
+          tempData.push(this.IsNewsData[i]);
+        }
+      }
+      this.IsNewsData = tempData;
+      for(var k = 0; k < this.IsNewsData.length; k++){
+        this.imageNew = this.IsNewsData[k].Thumbnail;
+        this.arrImage[k] = this.serverURL + this.imageNew.url;     
+      }
       this.newItemData = data;
       this.CkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Content);
       this.JapanCkNewsData = this.santized.bypassSecurityTrustHtml(this.newItemData.Japanese_Content);
-      //this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { lang: this.lang == 'vi' ?'vi':'jp', name: item.Name}});
+      this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { slug:item.Name,lang:this.lang == 'vi' ?'vi':'jp'}});
     });
+    console.log(this.CkNewsData)
+    this.newItemData = undefined;
+    this.EventsFirst = undefined;
     window.scrollTo(0, 0);
     $('#FirstNews').hide();
-   
+    $('#articleNews').show();
+    $('#Other-tiltle').show();
    }
   //display first acticrle 
-  OnChangeActicrles(){
+  OnChangeActicrles(item){
     this.eventsURL = this._getDataService.getNewsURL();
     this._http.get(this.eventsURL).subscribe(data =>{
       this.eventsData = data;
@@ -195,10 +211,16 @@ export class NewspageComponent implements OnInit {
       this.EventsFirst = this.eventsData[this.eventsData.length -1]; 
       this.CkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Content);  
       this.JapanCkeventsFirst = this.santized.bypassSecurityTrustHtml(this.EventsFirst.Japanese_Content);
-      }       
+      }  
+      this.router.navigate(['/','tin-tuc-su-kien'], {relativeTo: this._route, queryParams: { name:item.Name,lang:this.lang == 'vi' ?'vi':'jp'}});    
     });
-    $('#article').hide();
+    this.newItemData = undefined;
+    this.EventsFirst = undefined;
+    $('#article').show();
     $('#new-article').show();
+    $('#FirstNews').hide();
+    $('#articleNews').hide();
+    $('#Other-tiltle').show();
     window.scrollTo(0, 0);
   }
   ngOnInit() {
@@ -206,7 +228,6 @@ export class NewspageComponent implements OnInit {
       for (let i = 1; i <= 100; i++) {
       this.collection.push(`item ${i}`);
     }     
-   
 
     this._titleService.setTitle(this.LANGUAGE.NEWS_AND_EVENTS);
 
@@ -224,10 +245,19 @@ export class NewspageComponent implements OnInit {
         }
       }     
     });
-   
+    $('#Other-tiltle').hide();
   }
 
-
+  back(){
+    $('#new-article').hide();
+    $('#FirstNews').show();
+    $('#articleNews').hide();
+    $('#Other-tiltle').hide();
+    this.newItemData = undefined;
+    this.EventsFirst = undefined;
+    this.IsNewsData = this.NewsData.slice(1, this.NewsData.length);
+    this.router.navigate(['tin-tuc-su-kien'], { queryParams: {lang: this.lang === 'jp' ? 'jp' : 'vi'} });
+  }
 
   onmoveFn(data: NgxCarouselStore) { };
 

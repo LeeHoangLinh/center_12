@@ -15,11 +15,15 @@
         <li class="breadcrumb-item">
             <a routerLink = "/trang-chu" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.HOME_PAGE}}</a>
         </li>
-        <li class="breadcrumb-item">
-            <a routerLink="/hoc-vu" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">{{LANGUAGE.ACADEMIC}}</a>
+        <li class="breadcrumb-item ">
+            <a routerLink="/hoc-vu" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">
+                {{LANGUAGE.ACADEMIC}}
+            </a> 
         </li>
         <li class="breadcrumb-item active">
-            {{LANGUAGE.SCHEDULE}}
+            <a routerLink="/hoc-vu/lich-hoc" [queryParams]="{lang: lang === 'jp' ? 'jp' : 'vi'}">
+                {{LANGUAGE.SCHEDULE}}
+            </a> 
         </li>
     </ol>
 </nav>
@@ -54,10 +58,10 @@
                             </tr>
                         </thead>
                         <tr *ngFor="let item of openingSchedule">
-                            <td>{{ item.Name }}</td>
-                            <td class="schedule">{{ item.Time }}</td>
-                            <td>{{ item.TotalTime }} Giờ / khóa</td>
-                            <td>{{ item.Openday }}</td>
+                            <td >{{ item.Name }}</td>
+                            <td class="schedule" [innerHTML]="item.Time"></td>
+                            <td [innerHTML]="item.TotalTime"> Giờ / khóa</td>
+                            <td [innerHTML]="item.Openday"></td>
                         </tr>
                     </table>
                 </div>

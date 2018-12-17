@@ -13,14 +13,12 @@ export class AppComponent{
   public language;
   public lang: any;
   param: any;
-
-  constructor(
+ constructor(
     private router: Router,
   ) {
    this.language = "vi" ;
-    this.router.navigate(['/trang-chu'], { queryParams: { lang: 'vi'} });
+    this.router.navigate(['trang-chu'], { queryParams: { lang: 'vi'} });
   }
-
   ngOnInit() { 
   }
   changeLanguage ($event) {

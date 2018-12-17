@@ -1,4 +1,5 @@
 const LANG_JP = {
+     OTHER_NEW: 'ニュースとイベント',
      QNU_NAME : 'QNUユニバーシティ',
      JAPAN_CENTER_NAME : '日本センター',
      HOTLINE : 'ホットライン',

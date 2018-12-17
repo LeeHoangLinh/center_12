@@ -39,6 +39,7 @@ export class CareerOpportunitiesComponent implements OnInit {
   homeImagesURL: { [key: number]: string } = [];
   serverURL: any;
   data: any;
+  careerItemData: any;
   careerDataActive: any;
   lang: string;
   careerContent: SafeHtml;
@@ -70,6 +71,7 @@ export class CareerOpportunitiesComponent implements OnInit {
     private _titleService: Title,
     private http: HttpClient,
     private _route: ActivatedRoute,
+    private router : Router,
     private _getDataService: GetDataService,
     private _getImageService: GetImagesService,
     private santized: DomSanitizer
@@ -155,5 +157,10 @@ export class CareerOpportunitiesComponent implements OnInit {
       this.careerJpContent = this.santized.bypassSecurityTrustHtml(this.itemContents.japaneseContents);
       this.itemContents.japaneseName = tempContents.contents.Japanese_Name;
     });
+  }
+
+  back(){
+    this.selectItem("5bffd8aba929700548a0967a");
+    this.router.navigate(['/','co-hoi-nghe-nghiep'],{relativeTo: this._route, queryParams: { lang: this.lang == 'vi' ?'vi':'jp', id :  "5bffd8aba929700548a0967a" }});
   }
 }

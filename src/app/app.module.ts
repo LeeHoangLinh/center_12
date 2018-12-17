@@ -181,10 +181,10 @@ const routes: Routes = [
     path: 'dich-vu-doi-tac',
     component: ServicePartnerComponent,
   },
-  {
-    path: 'khoa-hoc',
-    component: JlptComponent,
-  },
+  // {
+  //   path: 'khoa-hoc',
+  //   component: JlptComponent,
+  // },
 
   {
     path: 'khoa-hoc/cac-khoa-tieng-nhat-JLPT',
@@ -209,6 +209,10 @@ const routes: Routes = [
   },
   {
     path: 'tin-tuc-su-kien',
+    component: NewspageComponent
+  },
+  {
+    path: 'trang-chu/tin-tuc-su-kien',
     component: NewspageComponent
   },
   {
@@ -269,11 +273,7 @@ const routes: Routes = [
     path: 'quan-ly-diem',
     component: ManagePointComponent
   },
-  {
-    path: 'hoc-vien',
-    component: AboutLearnerComponent
-  },
- 
+
 ];
 
 const childRoutes: Routes = [
